@@ -1,10 +1,10 @@
-
 db:
     image: percona
     restart: always
-    volumes:
-        - ./mysql:/var/lib/mysql
     env_file: conf/mysql
+    volumes:
+        - ./db/conf.d:/etc/mysql/conf.d
+
 dbclient:
     image: percona
     command: bash
@@ -36,7 +36,6 @@ php5:
     build: php5
     restart: always
     volumes:
-        - ./workspace:/data
         - ${HOME}/.ssh/id_rsa:/data/.ssh/id_rsa:ro
     links:
         - db
@@ -48,7 +47,6 @@ php7:
     build: php7
     restart: always
     volumes:
-        - ./workspace:/data
         - ${HOME}/.ssh/id_rsa:/data/.ssh/id_rsa:ro
     links:
         - db
@@ -59,11 +57,8 @@ php7:
 web:
     build: nginx
     restart: always
-    volumes:
-        - ./workspace:/data
     links:
         - php5:fpm
-
         - php5:fpm5
         - php7:fpm7
         - mailcatcher
