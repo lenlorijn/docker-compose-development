@@ -4,8 +4,6 @@ db:
     volumes:
         - ./mysql:/var/lib/mysql
     env_file: conf/mysql
-    ports:
-        - 127.0.0.1:3306:3306
 
 redis:
     image: redis:alpine
@@ -17,19 +15,33 @@ php5:
     build: php5
     volumes:
         - ./workspace:/data
+        - ${HOME}/.ssh:/data/.ssh:ro
+        - ${HOME}/.n98-magerun:/data/.n98-magerun:ro
+        - $SSH_AUTH_SOCK:/ssh-agent
+    environment:
+        SSH_AUTH_SOCK: /ssh-agent
+
     links:
         - db
         - mailcatch
         - redis
+    env_file: conf/blackfire
 
 php7:
     build: php7
     volumes:
         - ./workspace:/data
+        - ${HOME}/.ssh:/data/.ssh:ro
+        - ${HOME}/.n98-magerun:/data/.n98-magerun:ro
+        - $SSH_AUTH_SOCK:/ssh-agent
+    environment:
+        SSH_AUTH_SOCK: /ssh-agent
+
     links:
         - db
         - mailcatch
         - redis
+    env_file: conf/blackfire
 
 web:
     build: web
@@ -37,12 +49,11 @@ web:
         - ./workspace:/data:ro
     links:
         - php5:fpm
-
         - php5:fpm5
         - php7:fpm7
-
         - mailcatch
     ports:
-        - 127.0.0.1:80:80
-        - 127.0.0.1:443:443
+        - 80:80
+        - 443:443
+    env_file: conf/blackfire
 

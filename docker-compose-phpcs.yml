@@ -1,9 +1,9 @@
-composer:
-    build: composer
+phpcs:
+    build: phpcs
     volumes:
         - ./workspace:/app
-        - ./workspace/.composer:/composer
-        - ${HOME}/.ssh:/app/.ssh
+        - ${PWD}:/project
+        - ${HOME}/.ssh:/app/.ssh:ro
         - $SSH_AUTH_SOCK:/ssh-agent 
     environment:
               SSH_AUTH_SOCK: /ssh-agent
