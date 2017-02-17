@@ -56,12 +56,6 @@ Start
 ---
 
 - Run `./bin/dev up` from the development directory
-- \*.dev > 127.0.0.1 (if you use boot2docker, use that ip)
-    - dnsmasq
-      add a file `/etc/dnsmasq.d/dev.conf` with `address=/.dev/127.0.0.1`
-    - hosts
-        - add `127.0.0.1 test.project.dev` to your hosts file `/etc/hosts`
-        - add `127.0.0.1 mail.dev` to your hosts file `/etc/hosts`
 - add your project in workspace `customer/project/htdocs` (no need to restart, this will work out of the box)
 - open http://customer.project.dev/ in your browser (if you do not have dnsmasq, you have to add your hosts file manually).
 - all outgoing mail is sent to http://mail.dev/

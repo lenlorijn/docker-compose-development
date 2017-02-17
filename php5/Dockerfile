@@ -20,4 +20,4 @@ RUN docker-php-source extract \
     && docker-php-source delete
 
 RUN wget https://getcomposer.org/composer.phar -O /usr/local/bin/composer \
-    && chmod +x /usr/bin/composer
+    && chmod +x /usr/local/bin/composer
